@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Kwirio.us by TheRealMihir</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Kwirio.us</h1>
+        <p class="header">A hash-cracking, nutella-eating beast.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/TheRealMihir/Kwirio.us/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/TheRealMihir/Kwirio.us/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/TheRealMihir/Kwirio.us">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/TheRealMihir">TheRealMihir</a></p>
+
+
+      </header>
+      <section>
+        <h1>What is Kwirio.us?</h1>
+
+<p>To put it simply, Kwirio.us is a PHP script which accepts MD5 hashes and then attempts to find the "clear text" from which the hash was derived. Kwirio.us is special because it doesn't:</p>
+
+<ul>
+<li>use recursive algorithm to brute force the hash</li>
+<li>use a large database which requires 5MB to 50PB of space</li>
+<li>use a word list and attempt a dictionary crack</li>
+</ul><p>Instead, it uses the Internet[1] as a database - it acts as a meta search engine and searches through multiple other sites (including Google) for the hash. In this way, it acts as an interface between your application and other services so that you don't have to implement them yourself.</p>
+
+<p>[1] It comes with a few services implemented. Additional services can be easily implemented by adding as few as six lines of PHP code.</p>
+
+<h1>Installation</h1>
+
+<p>Installation of Kwirio.us is quick and painless. In fact, there isn't an installation, per se. Just download, extract, and load!</p>
+
+<p>To get started, just use the command below:</p>
+
+<pre><code>$ git clone git@github.com:TheRealMihir/Kwirio.us.git
+</code></pre>
+
+<h1>Sample Code</h1>
+
+<h2>Usage</h2>
+
+<p>Kwirio.us is easy to implement and can be implemented in a little as seven lines of code. There are only three methods which you must call in order to create a working application: </p>
+
+<ul>
+<li><code>sethash()</code></li>
+<li><code>validate()</code></li>
+<li><code>crack()</code></li>
+</ul><p>Let's make a basic application right now. Check it out:</p>
+
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+    <span class="k">include</span><span class="p">(</span><span class="s1">'Kwirio.php'</span><span class="p">);</span>
+
+    <span class="nv">$Kwirious</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Kwirio</span><span class="p">();</span>
+
+    <span class="nv">$Kwirious</span><span class="o">-&gt;</span><span class="na">setHash</span><span class="p">(</span><span class="s1">'b45cffe084dd3d20d928bee85e7b0f21'</span><span class="p">);</span>       
+
+    <span class="k">if</span><span class="p">(</span><span class="nv">$Kwirious</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">())</span>
+        <span class="k">echo</span> <span class="nv">$Kwirious</span><span class="o">-&gt;</span><span class="na">crack</span><span class="p">();</span>
+    <span class="k">else</span>
+        <span class="k">echo</span> <span class="s2">"Please set a valid hash."</span><span class="p">;</span> 
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+<p>This would print out:</p>
+
+<pre><code>string
+</code></pre>
+
+<p>Easy, right?</p>
+
+<h2>Making an API Service</h2>
+
+<p>But, wait. What if you want to use Kwirio.us as an API? Still pretty easy to do:</p>
+
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+  <span class="nx">header</span><span class="p">(</span><span class="s1">'content-type: application/json; charset=utf-8'</span><span class="p">);</span>
+
+  <span class="k">include</span><span class="p">(</span><span class="s1">'Kwirious/Kwirio.php'</span><span class="p">);</span>
+
+  <span class="nv">$Kwirious</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Kwirio</span><span class="p">();</span>
+
+  <span class="nv">$Kwirious</span><span class="o">-&gt;</span><span class="na">setHash</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">'h'</span><span class="p">]);</span>   
+
+  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>    
+
+  <span class="k">if</span><span class="p">(</span><span class="nv">$Kwirious</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">()){</span>
+    <span class="nv">$rslt</span> <span class="o">=</span> <span class="nv">$Kwirious</span><span class="o">-&gt;</span><span class="na">crack</span><span class="p">();</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nv">$rslt</span> <span class="o">==</span> <span class="s2">"Hash not cracked! :("</span><span class="p">)</span>
+      <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"hash"</span> <span class="o">=&gt;</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'h'</span><span class="p">],</span> <span class="s2">"valid"</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s2">"found"</span> <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span> <span class="s2">"result"</span> <span class="o">=&gt;</span> <span class="s2">""</span><span class="p">);</span> 
+    <span class="k">else</span>
+      <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"hash"</span> <span class="o">=&gt;</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'h'</span><span class="p">],</span> <span class="s2">"valid"</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s2">"found"</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s2">"result"</span> <span class="o">=&gt;</span> <span class="nv">$rslt</span><span class="p">);</span>         
+  <span class="p">}</span>
+
+  <span class="k">else</span>
+    <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"hash"</span> <span class="o">=&gt;</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'h'</span><span class="p">],</span> <span class="s2">"valid"</span> <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span> <span class="s2">"found"</span> <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span> <span class="s2">"result"</span> <span class="o">=&gt;</span> <span class="s2">""</span><span class="p">);</span>  
+
+  <span class="nv">$pattern</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">',"'</span><span class="p">,</span> <span class="s1">'{'</span><span class="p">,</span> <span class="s1">'}'</span><span class="p">);</span>
+  <span class="nv">$replacement</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">",</span><span class="se">\n\t\"</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"{\n</span><span class="se">\t</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">}"</span><span class="p">);</span>
+  <span class="nv">$rspn</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="nv">$pattern</span><span class="p">,</span> <span class="nv">$replacement</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">));</span>
+
+  <span class="k">echo</span> <span class="nv">$rspn</span><span class="p">;</span>     
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+<p>So now, if the URL</p>
+
+<pre><code>http://domain.com/API.php?h=b45cffe084dd3d20d928bee85e7b0f21
+</code></pre>
+
+<p>is called, it prints out a JSON response like:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"hash"</span><span class="p">:</span><span class="s2">"b45cffe084dd3d20d928bee85e7b0f21"</span><span class="p">,</span>
+  <span class="nt">"valid"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+  <span class="nt">"found"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+  <span class="nt">"result"</span><span class="p">:</span><span class="s2">"string"</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>And, ta da! You have your own API for crackin' hashes.</p>
+
+<h1>Services</h1>
+
+<p>The services which are implemented in Kwirio.us as of this point are:</p>
+
+<table>
+<tr>
+<th align="left">Service Name</th>
+<th align="center">Version Implemented</th>
+</tr>
+<tr>
+<td align="left">collision</td>
+<td align="center">v0.1</td>
+</tr>
+<tr>
+<td align="left">noisette</td>
+<td align="center">v0.1</td>
+</tr>
+<tr>
+<td align="left">rednoize</td>
+<td align="center">v0.1</td>
+</tr>
+<tr>
+<td align="left">ramsey</td>
+<td align="center">v0.1</td>
+</tr>
+<tr>
+<td align="left">darkbyte</td>
+<td align="center">v0.1</td>
+</tr>
+<tr>
+<td align="left">md5-hash</td>
+<td align="center">v0.1</td>
+</tr>
+<tr>
+<td align="left">google</td>
+<td align="center">v0.1</td>
+</tr>
+<tr>
+<td align="left">gromweb</td>
+<td align="center">v0.1</td>
+</tr>
+</table><h1>License</h1>
+
+<p>Kwirio.us is licensed under a WTFPL - do what the fuck you want to do. The terms are as follows:</p>
+
+<pre><code>         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                    Version 2, December 2004
+
+ Copyright (C) 2012 The Royal Panda Company &lt;mihir@royalpanda.co&gt;
+
+ Everyone is permitted to copy and distribute verbatim or modified
+ copies of this license document, and changing it is allowed as long
+ as the name is changed.
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
+</code></pre>
+
+<h1>Credits</h1>
+
+<ul>
+<li>
+<a href="https://github.com/TheRealMihir">TheRealMihir</a> started and maintains the project.</li>
+<li>The Ruby script <a href="https://github.com/juuso/BozoCrack">BozoCrack</a> inspired the project.</li>
+</ul><h1>Contribute</h1>
+
+<p>Want to contribute? We'd love to have your input.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
