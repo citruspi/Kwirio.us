@@ -147,9 +147,9 @@ Kwirio.us is licensed under a WTFPL - do what the fuck you want to do. The terms
 
 # Credits
 
-* [TheRealMihir](https://github.com/TheRealMihir) started and maintains the project.
+* [Mihir Singh](https://github.com/TheRealMihir) started and maintains the project.
 * The Ruby script [BozoCrack](https://github.com/juuso/BozoCrack) inspired the project.
 
 # Contribute
 
-Want to contribute? We'd love to have your input.
+Want to contribute? We'd love to have you on board.
