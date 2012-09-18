@@ -3,32 +3,41 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Kwirio.us by TheRealMihir</title>
-
+    <title>Kwirio.us by SirPalmerston</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
-    <div class="wrapper">
+
       <header>
-        <h1 class="header">Kwirio.us</h1>
-        <p class="header">A hash-cracking, nutella-eating beast.</p>
-
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/TheRealMihir/Kwirio.us/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/TheRealMihir/Kwirio.us/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/TheRealMihir/Kwirio.us">View On GitHub</a></li>
-        </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/TheRealMihir">TheRealMihir</a></p>
-
-
+        <h1>Kwirio.us</h1>
+        <p>A hash-cracking, nutella-eating beast.</p>
       </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/SirPalmerston/Kwirio.us" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/SirPalmerston/Kwirio.us/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/SirPalmerston/Kwirio.us/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
       <section>
         <h1>What is Kwirio.us?</h1>
 
@@ -40,7 +49,7 @@
 <li>use a word list and attempt a dictionary crack</li>
 </ul><p>Instead, it uses the Internet[1] as a database - it acts as a meta search engine and searches through multiple other sites (including Google) for the hash. In this way, it acts as an interface between your application and other services so that you don't have to implement them yourself.</p>
 
-<p>[1] It comes with a few services implemented. Additional services can be easily implemented by adding as few as six lines of PHP code.</p>
+<p>[1] It comes with several services implemented. Additional services can be easily implemented by adding as few as six lines of PHP code.</p>
 
 <h1>Installation</h1>
 
@@ -63,7 +72,7 @@
 <li><code>crack()</code></li>
 </ul><p>Let's make a basic application right now. Check it out:</p>
 
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
     <span class="k">include</span><span class="p">(</span><span class="s1">'Kwirio.php'</span><span class="p">);</span>
 
     <span class="nv">$Kwirious</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Kwirio</span><span class="p">();</span>
@@ -88,7 +97,7 @@
 
 <p>But, wait. What if you want to use Kwirio.us as an API? Still pretty easy to do:</p>
 
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
   <span class="nx">header</span><span class="p">(</span><span class="s1">'content-type: application/json; charset=utf-8'</span><span class="p">);</span>
 
   <span class="k">include</span><span class="p">(</span><span class="s1">'Kwirious/Kwirio.php'</span><span class="p">);</span>
@@ -184,7 +193,7 @@
 <pre><code>         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
                     Version 2, December 2004
 
- Copyright (C) 2012 The Royal Panda Company &lt;mihir@royalpanda.co&gt;
+ Copyright (C) 2012 Mihir Singh &lt;me@mihirsingh.com&gt;
 
  Everyone is permitted to copy and distribute verbatim or modified
  copies of this license document, and changing it is allowed as long
@@ -207,10 +216,11 @@
 <p>Want to contribute? We'd love to have you on board.</p>
       </section>
       <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p>Project maintained by <a href="https://github.com/SirPalmerston">SirPalmerston</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+    
   </body>
 </html>
