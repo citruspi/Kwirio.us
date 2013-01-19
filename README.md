@@ -1,4 +1,6 @@
-# What is Kwirio.us?
+## Kwirio.us, An Internetz Powered Hash Cracker
+
+### Introduction
 To put it simply, Kwirio.us is a PHP script which accepts MD5 hashes and then attempts to find the "clear text" from which the hash was derived. Kwirio.us is special because it doesn't:
 
 * use recursive algorithm to brute force the hash
@@ -9,27 +11,15 @@ Instead, it uses the Internet[1] as a database - it acts as a meta search engine
 
 [1] It comes with a few services implemented. Additional services can be easily implemented by adding as few as six lines of PHP code.
 
-# Installation
+### Usage
 
-Installation of Kwirio.us is quick and painless. In fact, there isn't an installation, per se. Just download, extract, and load!
-
-To get started, just use the command below:
-
-```
-$ git clone git@github.com:TheRealMihir/Kwirio.us.git
-```
-
-# Sample Code
-
-##Usage
-
-Kwirio.us is easy to implement and can be implemented in a little as seven lines of code. There are only three methods which you must call in order to create a working application: 
+Kwirio.us is easy to implement and can be implemented in as little as seven lines of code. There are only three methods which you must call order to crack a hash:
 
 * `sethash()`
 * `validate()`
 * `crack()`
 
-Let's make a basic application right now. Check it out:
+If you ran:
 
 ```php
 <?php
@@ -46,18 +36,15 @@ Let's make a basic application right now. Check it out:
 ?>
 ```
 
-This would print out:
+it would print out:
 
 ```
 string
 ```
 
-Easy, right?
+### An API
 
-
-## Making an API Service
-
-But, wait. What if you want to use Kwirio.us as an API? Still pretty easy to do:
+A Sample Kwirio.us API:
 
 ```php
 <?php
@@ -91,13 +78,13 @@ But, wait. What if you want to use Kwirio.us as an API? Still pretty easy to do:
 ?>
 ```
 
-So now, if the URL
+So, if an HTTP request was made to:
 
 ```
 http://domain.com/API.php?h=b45cffe084dd3d20d928bee85e7b0f21
 ```
 
-is called, it prints out a JSON response like:
+the response would be:
 
 ```json
 {
@@ -108,9 +95,7 @@ is called, it prints out a JSON response like:
 }
 ```
 
-And, ta da! You have your own API for crackin' hashes.
-
-# Services
+### Services
 
 The services which are implemented in Kwirio.us as of this point are:
 
@@ -125,30 +110,39 @@ The services which are implemented in Kwirio.us as of this point are:
 |google | v0.1  |
 |gromweb | v0.1 |
 
-# License
+### License
+Zinc is open source and is distributed under the MIT License:
 
-Kwirio.us is licensed under a WTFPL - do what the fuck you want to do. The terms are as follows:
+    Copyright © 2012 Mihir Singh <me@mihirsingh.com>
 
-```
-         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-                    Version 2, December 2004
+	Permission is hereby granted, free of charge, to any person obtaining a copy of 
+	this software and associated documentation files (the “Software”), to deal in 
+	the Software without restriction, including without limitation the rights to 
+	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of 
+	the Software, and to permit persons to whom the Software is furnished to do 
+	so, subject to the following conditions:
 
- Copyright (C) 2012 The Royal Panda Company <mihir@royalpanda.co>
+	The above copyright notice and this permission notice shall be included in all 
+	copies or substantial portions of the Software.
 
- Everyone is permitted to copy and distribute verbatim or modified
- copies of this license document, and changing it is allowed as long
- as the name is changed.
-
-            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-
-  0. You just DO WHAT THE FUCK YOU WANT TO.
-```
+	THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY 
+	KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+	WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+	DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+	CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
+	CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
+	IN THE SOFTWARE.
+	
+### Contributing
+Just fork and submit a pull request ;)
 
 # Credits
 
-* [Mihir Singh](https://github.com/TheRealMihir) started and maintains the project.
-* The Ruby script [BozoCrack](https://github.com/juuso/BozoCrack) inspired the project.
+* [Mihir Singh](https://github.com/citruspi) (Author)
+* [BozoCrack](https://github.com/juuso/BozoCrack) (Inspiration)
+* [StackOverflow](http://stackoverflow.com) (Help)
 
 # Contribute
 
