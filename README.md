@@ -137,13 +137,3 @@ Zinc is open source and is distributed under the MIT License:
 	
 ### Contributing
 Just fork and submit a pull request ;)
-
-# Credits
-
-* [Mihir Singh](https://github.com/citruspi) (Author)
-* [BozoCrack](https://github.com/juuso/BozoCrack) (Inspiration)
-* [StackOverflow](http://stackoverflow.com) (Help)
-
-# Contribute
-
-Want to contribute? We'd love to have you on board.
